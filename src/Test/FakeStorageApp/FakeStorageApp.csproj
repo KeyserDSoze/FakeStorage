@@ -11,4 +11,8 @@
     <PackageReference Include="Rystem" Version="3.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\FakeStorage\FakeStorage.csproj" />
+  </ItemGroup>
+
 </Project>

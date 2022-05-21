@@ -17,22 +17,24 @@ ServiceLocator
         options.MillisecondsOfWaitForUpdate = customRange;
         options.MillisecondsOfWaitForGet = customRange;
         options.MillisecondsOfWaitForWhere = new Range(3000, 7000);
-        var customExceptions = new List<ExceptionOdds>();
-        customExceptions.Add(new ExceptionOdds()
+        var customExceptions = new List<ExceptionOdds>
         {
-            Exception = new Exception(),
-            Percentage = 0.45
-        });
-        customExceptions.Add(new ExceptionOdds()
-        {
-            Exception = new Exception("Salsiccia"),
-            Percentage = 5.1
-        });
-        customExceptions.Add(new ExceptionOdds()
-        {
-            Exception = new Exception("Salsiccia Gaudia"),
-            Percentage = 43.1
-        });
+            new ExceptionOdds()
+            {
+                Exception = new Exception(),
+                Percentage = 0.45
+            },
+            new ExceptionOdds()
+            {
+                Exception = new Exception("Salsiccia"),
+                Percentage = 5.1
+            },
+            new ExceptionOdds()
+            {
+                Exception = new Exception("Salsiccia Gaudia"),
+                Percentage = 43.1
+            }
+        };
         options.ExceptionOddsForDelete.AddRange(customExceptions);
         options.ExceptionOddsForGet.AddRange(customExceptions);
         options.ExceptionOddsForInsert.AddRange(customExceptions);
