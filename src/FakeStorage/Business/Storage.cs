@@ -10,7 +10,7 @@ namespace FakeStorage
         {
             _settings = settings.Settings[nameof(IFakeStorage<T, TKey>)];
         }
-        private readonly Dictionary<TKey, T> _values = new();
+        internal static readonly Dictionary<TKey, T> _values = new();
         private static int GetRandomNumber(Range range)
         {
             int maxPlusOne = range.End.Value + 1 - range.Start.Value;
@@ -91,13 +91,16 @@ namespace FakeStorage
                 return false;
         }
 
-        public async Task<IEnumerable<T>> WhereAsync(Func<T, bool> predicate)
+        public async Task<List<T>> WhereAsync(Func<T, bool>? predicate = null)
         {
             await Task.Delay(GetRandomNumber(_settings.MillisecondsOfWaitForWhere));
             var exception = GetException(_settings.ExceptionOddsForWhere);
             if (exception != null)
                 throw exception;
-            return _values.Select(x => x.Value).Where(predicate);
+            if (predicate == null)
+                return _values.Select(x => x.Value).ToList();
+            else
+                return _values.Select(x => x.Value).Where(predicate).ToList();
         }
     }
 }

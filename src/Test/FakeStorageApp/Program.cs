@@ -27,12 +27,12 @@ ServiceLocator
             new ExceptionOdds()
             {
                 Exception = new Exception("Salsiccia"),
-                Percentage = 5.1
+                Percentage = 0.1
             },
             new ExceptionOdds()
             {
                 Exception = new Exception("Salsiccia Gaudia"),
-                Percentage = 43.1
+                Percentage = 0.548
             }
         };
         options.ExceptionOddsForDelete.AddRange(customExceptions);
@@ -41,6 +41,8 @@ ServiceLocator
         options.ExceptionOddsForUpdate.AddRange(customExceptions);
         options.ExceptionOddsForWhere.AddRange(customExceptions);
     })
+    .AddRandomData(x => x.Key, 20)
+    .Services
     .FinalizeWithoutDependencyInjection();
 
 
@@ -49,3 +51,5 @@ await storage.InsertAsync("aaa", new());
 await storage.UpdateAsync("aaa", new());
 var q = await storage.GetAsync("aaa");
 await storage.DeleteAsync("aaa");
+var all = await storage.WhereAsync();
+var olaf = string.Empty;

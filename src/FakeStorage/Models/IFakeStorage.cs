@@ -6,6 +6,6 @@
         Task<bool> UpdateAsync(TKey key, T value);
         Task<T?> GetAsync(TKey key);
         Task<bool> DeleteAsync(TKey key);
-        Task<IEnumerable<T>> WhereAsync(Func<T, bool> predicate);
+        Task<List<T>> WhereAsync(Func<T, bool>? predicate = null);
     }
 }

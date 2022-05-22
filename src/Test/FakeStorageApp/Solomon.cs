@@ -11,5 +11,13 @@ namespace FakeStorageApp
         public string Key { get; set; }
         public string Value { get; set; }
         public string Folder { get; set; }
+        public Casualty Casualty { get; set; }
+        public List<int> Hellos { get; set; }
+        public Dictionary<string, string> Headers { get; set; }
+    }
+    internal class Casualty
+    {
+        public string Value { get; set; }
+        public string Folder { get; set; }
     }
 }
