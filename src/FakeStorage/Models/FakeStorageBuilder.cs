@@ -14,7 +14,7 @@ namespace FakeStorage
         public IServiceCollection? Services { get; init; }
         public FakeStorageBuilder<T, TKey> AddFakeStorage(Action<FakeStorageSettings> settings)
             => Services!.AddFakeStorage<T, TKey>(settings);
-        public FakeStorageBuilder<T, TKey> AddRandomData(Expression<Func<T, TKey>> navigationKey, int numberOfElements = 100)
+        public FakeStorageBuilder<T, TKey> AddRandomData(Expression<Func<T, TKey>> navigationKey, int numberOfElements = 100, int numberOfElementsWhenEnumerableIsFound = 10)
         {
             var nameOfKey = navigationKey.ToString().Split('.').Last();
             var properties = typeof(T).GetProperties();
@@ -23,10 +23,10 @@ namespace FakeStorage
                 var entity = Activator.CreateInstance<T>();
                 foreach (var property in properties)
                 {
-                    property.SetValue(entity, Creator.Transform(property));
+                    property.SetValue(entity, Creator.Transform(property, numberOfElementsWhenEnumerableIsFound));
                 }
                 var key = properties.First(x => x.Name == nameOfKey).GetValue(entity);
-                Storage<T, TKey>._values.Add((TKey)key, entity);
+                Storage<T, TKey>._values.Add((TKey)key!, entity);
             }
             return this;
         }

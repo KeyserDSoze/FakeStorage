@@ -11,7 +11,7 @@ namespace FakeStorage.Dummy
 {
     internal static class Creator
     {
-        public static dynamic Transform(Type type, string name = null)
+        public static dynamic Transform(Type type, string name, int numberOfEntities)
         {
             if (type == typeof(int) || type == typeof(int?))
             {
@@ -80,8 +80,8 @@ namespace FakeStorage.Dummy
                 {
                     for (int i = 0; i < 10; i++)
                     {
-                        var newKey = Creator.Transform(type.GetGenericArguments().First(), "Key");
-                        var newValue = Creator.Transform(type.GetGenericArguments().Last(), "Value");
+                        var newKey = Creator.Transform(type.GetGenericArguments().First(), "Key", 1);
+                        var newValue = Creator.Transform(type.GetGenericArguments().Last(), "Value", numberOfEntities);
                         ((dynamic)entity).Add(newKey, newValue);
                     }
                 }
@@ -89,7 +89,7 @@ namespace FakeStorage.Dummy
                 {
                     for (int i = 0; i < 10; i++)
                     {
-                        var newValue = Creator.Transform(type.GetGenericArguments().First());
+                        var newValue = Creator.Transform(type.GetGenericArguments().First(), string.Empty, numberOfEntities);
                         ((dynamic)entity).Add(newValue);
                     }
                 }
@@ -100,7 +100,7 @@ namespace FakeStorage.Dummy
                         var properties = type.GetProperties();
                         foreach (var property in properties)
                         {
-                            property.SetValue(entity, Creator.Transform(property));
+                            property.SetValue(entity, Creator.Transform(property, numberOfEntities));
                         }
                     }
                     catch
@@ -112,10 +112,10 @@ namespace FakeStorage.Dummy
             else
                 return default;
         }
-        public static dynamic Transform(PropertyInfo propertyInfo)
+        public static dynamic Transform(PropertyInfo propertyInfo, int numberOfEntities)
         {
             Type type = propertyInfo.PropertyType;
-            return Transform(type, propertyInfo.Name);
+            return Transform(type, propertyInfo.Name, numberOfEntities);
         }
     }
 }
