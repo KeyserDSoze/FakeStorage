@@ -17,7 +17,7 @@ namespace FakeStorage
             FakeStorageSettingsFactory.Instance.Settings.Add(nameof(IFakeStorage<T, TKey>), options);
             services.AddSingleton(FakeStorageSettingsFactory.Instance);
             services.AddSingleton<IFakeStorage<T, TKey>, Storage<T, TKey>>();
-            return new FakeStorageBuilder<T, TKey> { Services = services };
+            return new FakeStorageBuilder<T, TKey>(services);
 
             static void Check(List<ExceptionOdds> odds)
             {

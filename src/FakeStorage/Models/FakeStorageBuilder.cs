@@ -11,9 +11,14 @@ namespace FakeStorage
 {
     public class FakeStorageBuilder<T, TKey>
     {
-        public IServiceCollection? Services { get; init; }
+        private readonly IServiceCollection _services;
+
+        public FakeStorageBuilder(IServiceCollection services)
+        {
+            _services = services;
+        }
         public FakeStorageBuilder<T, TKey> AddFakeStorage(Action<FakeStorageSettings> settings)
-            => Services!.AddFakeStorage<T, TKey>(settings);
+            => _services!.AddFakeStorage<T, TKey>(settings);
         public FakeStorageBuilder<T, TKey> AddRandomData(Expression<Func<T, TKey>> navigationKey, int numberOfElements = 100, int numberOfElementsWhenEnumerableIsFound = 10)
         {
             var nameOfKey = navigationKey.ToString().Split('.').Last();
@@ -30,5 +35,7 @@ namespace FakeStorage
             }
             return this;
         }
+        public IServiceCollection Finalize() 
+            => _services!;
     }
 }

@@ -42,7 +42,7 @@ ServiceLocator
         options.ExceptionOddsForWhere.AddRange(customExceptions);
     })
     .AddRandomData(x => x.Key, 20)
-    .Services
+    .Finalize()
     .FinalizeWithoutDependencyInjection();
 
 
